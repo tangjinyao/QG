@@ -1,5 +1,5 @@
 /***************************************************************************************
- *	File Name				:	linkedList.h
+ *	File Name				:	DbLinkedList.h
  *	CopyRight				:	2020 QG Studio
  *	SYSTEM					:   win10
  *	Create Data				:	2020.3.28
@@ -33,8 +33,9 @@ typedef int ElemType;
 // define struct of linked list
 typedef struct LNode {
 	ElemType data;
-  	struct LNode *next;
-} LNode, *LinkedList;
+	struct LNode* pre;
+	struct LNode* next;
+} LNode, * LinkedList;
 
 // define Status
 typedef enum Status {
@@ -54,7 +55,7 @@ typedef enum Status {
  *	@return		 : Status
  *  @notice      : None
  */
-Status InitList(LinkedList *L);
+Status InitList(LinkedList* L);
 
 /**
  *  @name        : void DestroyList(LinkedList *L)
@@ -63,25 +64,34 @@ Status InitList(LinkedList *L);
  *	@return		 : None
  *  @notice      : None
  */
-void DestroyList(LinkedList *L);
+void DestroyList(LinkedList* L);
 
 /**
- *  @name        : Status InsertList(LNode* L, ElemType p, LNode *q)
+ *  @name        : Status InsertList(LNode* L, ElemType p, LNode* q)
+ *	@description : insert node q before node p
+ *	@param		 : p, q
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status insertBeforeNode(LNode* L, ElemType p, LNode* q);
+
+/**
+ *  @name        : Status InsertList(LNode* L, ElemType p, LNode* q)
  *	@description : insert node q after node p
  *	@param		 : p, q
  *	@return		 : Status
  *  @notice      : None
  */
-Status InsertList(LNode* L, ElemType p, LNode *q);
+Status insertAfterNode(LNode* L, ElemType p, LNode* q);
 
 /**
- *  @name        : Status DeleteList(LNode* L, ElemType p, ElemType *e)
+ *  @name        : Status DeleteList(LNode *L, ElemType p)
  *	@description : delete the first node after the node p and assign its value to e
  *	@param		 : p, e
  *	@return		 : Status
  *  @notice      : None
  */
-Status DeleteList(LNode* L, ElemType p, ElemType *e);
+Status DeleteList(LNode* L, ElemType p);
 
 /**
  *  @name        : void TraverseList(LinkedList L, void (*visit)(ElemType e))
@@ -101,43 +111,9 @@ void TraverseList(LinkedList L, void (*visit)(ElemType e));
  */
 Status SearchList(LinkedList L, ElemType e);
 
-/**
- *  @name        : Status ReverseList(LinkedList *L)
- *	@description : reverse the linked list
- *	@param		 : L(the head node)
- *	@return		 : Status
- *  @notice      : None
- */
-Status ReverseList(LinkedList *L);
 
-/**
- *  @name        : Status IsLoopList(LinkedList L)
- *	@description : judge whether the linked list is looped
- *	@param		 : L(the head node)
- *	@return		 : Status
- *  @notice      : None
- */
-Status IsLoopList(LinkedList L);
 
-/**
- *  @name        : LNode* ReverseEvenList(LinkedList *L)
- *	@description : reverse the nodes which value is an even number in the linked list, input: 1 -> 2 -> 3 -> 4  output: 2 -> 1 -> 4 -> 3
- *	@param		 : L(the head node)
- *	@return		 : LNode(the new head node)
- *  @notice      : choose to finish
- */
-LNode* ReverseEvenList(LinkedList *L);
-
-/**
- *  @name        : LNode* FindMidNode(LinkedList *L)
- *	@description : find the middle node in the linked list
- *	@param		 : L(the head node)
- *	@return		 : LNode
- *  @notice      : choose to finish
- */
-LNode* FindMidNode(LinkedList *L);
-
- /**************************************************************
+/**************************************************************
 *	End-Multi-Include-Prevent Section
 **************************************************************/
 #endif

@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedList.h"
+#include "DbLinkedList.h"
 
 Status InitList(LinkedList* L) {//注意 LinkedList 本身就是一个指针
 	(*L) = (LNode*)malloc(sizeof(LNode));//创造头结点
+	(*L)->pre = NULL;
 	(*L)->next = NULL;
 	return SUCCESS;
 }
@@ -21,8 +22,30 @@ void DestroyList(LinkedList* L) {
 	*L = NULL;
 }
 
+//在某个元素前面插入一个元素
+Status insertBeforeNode(LNode* L, ElemType elem, LNode* q) {
+	if (L == NULL || L->next == NULL) return ERROR; //错误判断
+
+	//寻找节点值为elem在链表中的位置
+	LNode* p = L->next;
+	while (p != NULL) {//寻找elem
+		if (p->data == elem) break;
+		p = p->next;
+	}
+	if (p == NULL) return ERROR;//找不到符合条件的elem
+
+
+	//一般情况
+	q->pre = p->pre;
+	q->pre->next = q;
+	p->pre = q;
+	q->next = p;
+	return SUCCESS;
+}
+
+
 //在某个元素后面插入一个元素
-Status InsertList(LNode* L, ElemType elem, LNode* q) {
+Status insertAfterNode(LNode* L, ElemType elem, LNode* q) {
 	if (L == NULL || L->next == NULL) return ERROR; //错误判断
 
 	//寻找节点值为elem在链表中的位置
@@ -42,31 +65,31 @@ Status InsertList(LNode* L, ElemType elem, LNode* q) {
 
 	//一般情况
 	q->next = p->next;
+	q->next->pre = p;
 	p->next = q;
+	q->pre = p;
 	return SUCCESS;
 }
 
-//删除p节点的后一个节点,并将其值赋给e
-Status DeleteList(LNode* L, ElemType elem, ElemType* e) {
-	if (L == NULL) return ERROR; //错误判断
+
+
+//删除p节点
+Status DeleteList(LNode* L, ElemType elem) {
+	if (L == NULL || L->next == NULL) return ERROR; //错误判断
 
 	//寻找节点值为elem在链表中的位置
 	LNode* p = L->next;
-	while (p != NULL) {//寻找elem
-		if (p->data == elem) break;
+	while (p->next != NULL) {//寻找elem
+		if (p->next->data == elem) break;
 		p = p->next;
 	}
 	if (p == NULL) return ERROR;//找不到符合条件的elem
 
-	//先处理特殊情况
-	if (p->next == NULL) {
-		return ERROR;
-	}
 
 	//一般情况
-	*e = p->next->data;//将要删除的节点的值赋给*e
 	LNode* temp = p->next;//temp指向要删除的节点
 	p->next = temp->next;
+	temp->next->pre = p;
 	free(temp);
 	return SUCCESS;
 }
@@ -89,7 +112,6 @@ void TraverseList(LinkedList L, void (*visit)(ElemType e)) {
 		visit(p->data);//调用visit函数,打印当前元素
 		p = p->next;
 	}
-	printf("NULL\n");
 }
 
 //判断链表中是否存在某元素
@@ -108,7 +130,7 @@ Status SearchList(LinkedList L, ElemType e) {
 
 //翻转链表(迭代法)
 Status ReverseList(LinkedList* L) {
-	if ((*L) == NULL || (*L)->next == NULL) return ERROR;
+	if ((*L) == NULL) return SUCCESS;
 	LNode* cur = ((*L)->next);//用于指向当前节点,初始化为头结点
 	LNode* pre = NULL;//用于指向当前节点的上一个节点
 	while (cur != NULL) {
