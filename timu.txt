@@ -1,0 +1,4 @@
+Hello,world!	Y	25
+he_is_good.	N	25
+Im_fine.	N	25
+I_love_you.	Y	25
