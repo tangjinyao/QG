@@ -84,4 +84,25 @@ public class JDBCUtils {
             se.printStackTrace();
         }
     }
+
+    /**
+     * 查询数据
+     *
+     *
+     */
+    public static void traverse(Statement statement, ResultSet resultSet) throws Exception {
+        // 执行查询语句并获取结果集
+        String sql = "SELECT * FROM student";
+        resultSet = statement.executeQuery(sql);
+
+        // 处理查询结果
+
+        System.out.println("id" + '\t' + "name" + '\t' + "age");//打印表头
+
+        while (resultSet.next()) {
+            System.out.print(resultSet.getString("id") + '\t');
+            System.out.print(resultSet.getString("name") + "\t\t");
+            System.out.println(resultSet.getString("age"));
+        }
+    }
 }

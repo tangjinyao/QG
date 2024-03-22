@@ -22,15 +22,9 @@ public class JDBCDemo {
             String sql = "SELECT * FROM student";
             resultSet = statement.executeQuery(sql);
 
-            // 处理查询结果
+            // 调用 JDBCUtils 遍历整个数据库
+            JDBCUtils.traverse(statement, resultSet);
 
-            System.out.println("id" + '\t' + "name" + '\t' + "age");//打印表头
-
-            while (resultSet.next()) {
-                System.out.print(resultSet.getString("id") + '\t');
-                System.out.print(resultSet.getString("name") + "\t\t");
-                System.out.println(resultSet.getString("age"));
-            }
 
         } catch (Exception e) {
             // 处理异常
