@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.Objects;
 
 
-@WebServlet(urlPatterns = {"/404"})
+@WebServlet(urlPatterns = {"/404"})//此处如果用"/*"会导致访问不到web目录下的html文件
 public class Status404NotFound extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,9 +34,13 @@ public class Status404NotFound extends HttpServlet {
 
         String requestURI = req.getRequestURI();
 
+        //以下的重定向是无效的, 最后会导致死循环
         if (requestURI.endsWith("regist.html")) {
-            // 跳过处理或重定向到其他页面
-            resp.sendRedirect("/regist.html"); // 或其他路径
+            resp.sendRedirect("/HttpServlet2_Web_exploded/regist.html");
+            return;
+        }
+        if (requestURI.endsWith("login.html")) {
+            resp.sendRedirect("/HttpServlet2_Web_exploded/login.html");
             return;
         }
 
