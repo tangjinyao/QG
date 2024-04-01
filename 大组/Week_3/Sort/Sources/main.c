@@ -6,8 +6,7 @@
 #include "LinkStackTool.h"
 #include "file.h"
 
-#include "sort.c"
-//#include "LinkStackTool.c"
+#include "sort.c" 
 #include "file.c"
 
 int max = 10000;//待排序数组的最大值
@@ -148,23 +147,17 @@ void keyMainDown() {
 		end_time = clock();
 		time_spent3 = (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000;
 
-		printf("\n");
-		printf("MergeSort对10000个数据排序执行时间为: %f 毫秒\n", time_spent1);
-		printf("MergeSort对50000个数据排序执行时间为: %f 毫秒\n", time_spent2);
-		printf("MergeSort对200000个数据排序执行时间为: %f 毫秒\n", time_spent3);
-		printf("MergeSort对100个数据进行100000次排序总执行时间预计要特别久......\n");
-
 		start_time = clock();
 		for (int i = 0, j = 0; i < 100000; i++, j = j + 100) {
 			MergeSort(arr4, j, j + 99);
-			if (i % 1000 == 0) {
-				printf("正在进行第%d次排序\n", i);
-			}
 		}
 		end_time = clock();
 		time_spent4 = (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000;
 
-
+		printf("\n");
+		printf("MergeSort对10000个数据排序执行时间为: %f 毫秒\n", time_spent1);
+		printf("MergeSort对50000个数据排序执行时间为: %f 毫秒\n", time_spent2);
+		printf("MergeSort对200000个数据排序执行时间为: %f 毫秒\n", time_spent3);
 		printf("MergeSort对100个数据进行100000次排序总执行时间为: %f 毫秒\n", time_spent4);
 
 		writeText(arr1, size1, "text1.txt");

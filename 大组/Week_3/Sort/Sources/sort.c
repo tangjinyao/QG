@@ -7,7 +7,6 @@
 
 #include "LinkStackTool.c"
 
-
 //折半插入排序
 void BInsertSort(int* a, int n) {
 	int low, high, mid, i, j;
@@ -49,10 +48,10 @@ void BInsertSort(int* a, int n) {
 
 //归并排序（合并数组）
 void MergeArray(int* a, int begin, int mid, int end) {
-	int leftArr[100005] = { 0 };
-	int rightArr[100005] = { 0 };
 	long long leftSize = mid - begin + 1;
 	long long rightSize = end - mid;
+	int* leftArr = (int*)malloc(sizeof(int) * (leftSize + 1));
+	int* rightArr = (int*)malloc(sizeof(int) * (rightSize + 1));
 	long long i, j, k;
 
 	//将[begin, mid]复制到左数组中
@@ -79,6 +78,9 @@ void MergeArray(int* a, int begin, int mid, int end) {
 			a[k++] = rightArr[j++];
 		}
 	}
+
+	free(leftArr);
+	free(rightArr);
 }
 
 //归并排序
