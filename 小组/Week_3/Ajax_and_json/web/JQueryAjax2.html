@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.7.1.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+
+        //定义方法
+        function fun(){
+            $.ajax({
+                url:"ajaxServlet",//请求地址
+                type:"post",//请求方式
+                data:{
+                    "name":$("#name").val(),
+                    "email":$("#email").val(),
+                    "password":$("#password").val(),
+                },//请求数据
+                success:function(data){//请求成功时调用此函数
+                    alert(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("发生错误");
+                    console.log("HTTP Status: " + jqXHR.status); // 输出HTTP状态码
+                    console.log("Ajax Error: " + textStatus); // 输出Ajax错误信息
+                    console.log("Exception: " + errorThrown); // 输出异常信息（如果有）
+                }
+            });
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+
+    <label for="name">姓名:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">电子邮件:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">密码:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <label>性别:</label><br>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">男</label><br>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">女</label><br>
+
+    <label for="country">国家:</label>
+    <select id="country" name="country">
+        <option value="usa">美国</option>
+        <option value="china">中国</option>
+        <option value="uk">英国</option>
+    </select><br>
+
+    <input type="button" value="发送异步请求" onclick="fun();">
+
+</body>
+</html>

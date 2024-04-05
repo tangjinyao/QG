@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.7.1.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+
+        //定义方法
+        function fun(){
+            $.ajax({
+                url:"data.json",//请求地址
+                type:"get",//请求方式
+                data:{
+
+                },//请求数据
+                success:function(data){//请求成功时调用此函数
+                    //创建一个无序列表
+                    var ul = $("<ul></ul>");
+                    //遍历data数组
+                    for(var i=0;i<data.length;i++){
+                        //创建一个li标签
+                        var li = $("<li></li>");
+                        //将data数组中的数据添加到li标签中
+                        li.text(data[i].name+" "+data[i].age);
+                        //将li标签添加到ul标签中
+                        ul.append(li);
+                    }
+                    //将ul标签添加到body标签中
+                    $("body").append(ul);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("发生错误");
+                    console.log("HTTP Status: " + jqXHR.status); // 输出HTTP状态码
+                    console.log("Ajax Error: " + textStatus); // 输出Ajax错误信息
+                    console.log("Exception: " + errorThrown); // 输出异常信息（如果有）
+                }
+            });
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+    <input type="button" value="发送异步请求" onclick="fun();">
+
+</body>
+</html>
